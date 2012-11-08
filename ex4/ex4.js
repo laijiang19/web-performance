@@ -209,7 +209,7 @@
 	var $yourbook = $("<ul></ul>");
 	var $li;
 
-	$(document.body).append($("<h1>My Address Book</h1>"));
+	$(document.body).append($("<h2>My Address Book</h2>"));
 	mybook.resetIterator();
 	entry = mybook.current();
 	do {
@@ -221,7 +221,7 @@
 
 	// *****
 
-	$(document.body).append($("<h1>Your Address Book</h1>"));
+	$(document.body).append($("<h2>Your Address Book</h2>"));
 	yourbook.resetIterator();
 	entry = yourbook.current();
 	do {
