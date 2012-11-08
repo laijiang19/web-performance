@@ -1,0 +1,202 @@
+/* **************************************** */
+/* random crap from other sites */
+#Outer {
+    text-align: center;
+}
+
+#Inner710 {
+    width: 710px;
+    margin: 0px auto;
+    padding-bottom: 10px;
+}
+
+#Inner734 {
+    width: 734px;
+    margin: 0px auto;
+    padding-bottom: 10px;
+}
+
+#BannerO {
+    margin: 0px auto;
+    width: 734px;
+}
+
+#BannerI {
+    text-align: center;
+    margin-top: 15px;
+}
+
+#Languages {
+    margin: 20px 0px;
+    clear: both;
+}
+
+#Languages a {
+    padding: 0px 6px 0px 22px;
+    font-size: 11px;
+    line-height: 20px;
+}
+
+#Languages a.zz, #Languages a.zz:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
+#Languages a.xx {
+    padding: 0px;
+}
+
+#Languages img {
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+#lipsum {
+    font-size: 11px;
+    text-align: justify;
+}
+
+#generated {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: left;
+}
+
+#lipsumta {
+    font-size: 11px;
+    text-align: justify;
+    font-family: Arial,Helvetica,sans;
+    width: 700px;
+    height: 300px;
+    padding: 3px 0px 3px 5px;
+    border: 1px solid #666;
+    margin: 0px 0px 5px 0px;
+}
+
+#Packages a {
+    margin: 0px 5px;
+}
+
+#Footer a {
+    margin: 10px;
+    color: #808080;
+}
+
+.lc {
+    clear: left;
+    float: left;
+    width: 348px;
+}
+
+.rc {
+    clear: right;
+    float: right;
+    width: 348px;
+}
+
+.lc div {
+    float: left;
+    text-align: left;
+}
+
+.rc div {
+    float: left;
+    text-align: left;
+}
+
+.box {
+    clear: both;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #666666;
+}
+
+.banners {
+    clear: both;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #d0d0d0;
+}
+
+.banners img {
+    margin: 2px;
+}
+
+a.lnk:link,a.lnk:visited,a.lnk:active,a.lnk:hover {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+input#amount {
+    width: 40px;
+    text-align: right;
+}
+
+input#generate {
+    width: 160px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+div.start {
+    width: 30px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+#HdrLeft {
+    float: left;
+    text-align: left;
+    width: 160px;
+}
+
+#HdrRight {
+    float: right;
+    text-align: right;
+    width: 160px;
+    line-height: 14px;
+}
+
+#feedtable td {
+    text-align: left;
+    vertical-align: middle;
+}
+
+#typetable td {
+    text-align: left;
+    vertical-align: middle;
+    height: 20px;
+}
+
+#Partner {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+#Partner h1 {
+    background: none;
+    font-size: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+#Partner h2 {
+    background: none;
+    font-size: 14px;
+    height: 14px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.ltr {
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+
+
