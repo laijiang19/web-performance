@@ -1,0 +1,25 @@
+#mover {
+	position: absolute;
+	background: url(thread.png) 0 0 no-repeat;
+	width: 507px;
+	height: 335px;
+	left: 10px;
+	top: 10px;
+	-ms-transition: left 1s, top 1s; -moz-transition: left 1s, top 1s; -webkit-transition: left 1s, top 1s; -o-transition: left 1s, top 1s; transition: left 1s, top 1s;
+}
+
+#mover.moved {
+	left: 300px;
+	top: 300px;
+	-ms-transition: left 1s, top 1s; -moz-transition: left 1s, top 1s; -webkit-transition: left 1s, top 1s; -o-transition: left 1s, top 1s; transition: left 1s, top 1s;
+}
+
+#current {
+	position: fixed;
+	left: 75px;
+	top: 75px;
+	padding: 6px;
+	border: 1px solid #000;
+	background: #ddd;
+	font-size: 25px;
+}

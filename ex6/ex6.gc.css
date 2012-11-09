@@ -1,0 +1,9 @@
+#spinner {
+	position: fixed;
+	background-color: #ddd;
+	border: 1px solid #000;
+	padding: 6px;
+	font-size: 25px;
+	right: 5px;
+	top: 5px;
+}
