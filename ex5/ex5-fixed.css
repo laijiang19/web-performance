@@ -1,0 +1,14 @@
+.elem {
+	position: absolute;
+	width: 75px;
+	height: 75px;
+	border: 1px solid #000;
+}
+
+.elem.highlighted {
+	border: 2px dashed purple;
+}
+
+.elem.moving {
+	-ms-transition: left 0.5s, top 0.5s; -moz-transition: left 0.5s, top 0.5s; -webkit-transition: left 0.5s, top 0.5s; -o-transition: left 0.5s, top 0.5s; transition: left 0.5s, top 0.5s;
+}

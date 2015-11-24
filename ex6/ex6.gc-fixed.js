@@ -1,34 +1,38 @@
 (function(){
 
-	function updateSpinner() {
-		var t = "Fetching";
+	function updateText() {
+		if (texts_count < 4) {
+			texts_count++;
 
-		for (var i=0; i<spinner_count; i++) {
-			t += ".";
+			$elem = $("<p></p>").text(text);
+
+			if (texts_count === 1) {
+				$h1.after($elem);
+			}
+			else {
+				$body.find("p:first").before($elem);
+			}
+
+			$elem = null;
 		}
-		$spinner.text(t);
-
-		spinner_count = (spinner_count + 1) % 20;
-		setTimeout(updateSpinner,50);
+		else {
+			// only query the DOM once for the p's
+			if (!$children) {
+				$children = $parent.children("p");
+			}
+			// change the text of the p's instead of recreating new ones
+			for (i=3; i>0; i--) {
+				$children[i].childNodes[0].nodeValue = $children[i-1].childNodes[0].nodeValue;
+			}
+			$children[0].childNodes[0].nodeValue = text;
+		}
 	}
 
 	function fetchText() {
-		var text = texts[(Math.round(Math.random() * 1E2) % texts.length)];
-		var delay = Math.max(1000,Math.round(Math.random() * 1E4) % 4000);
-		var $elem = $("<p></p>").text(text);
+		text = texts[(Math.round(Math.random() * 1E2) % texts.length)];
+		var delay = Math.max(200,Math.round(Math.random() * 1E4) % 1000);
 
-		$h1.after($elem);
-
-		$elems.unshift($elem);
-
-		texts_count++;
-
-		if (texts_count > 4) {
-			$elem = $elems.pop();
-			$elem.remove();
-		}
-
-		$elem = null;
+		requestAnimationFrame(updateText);
 
 		setTimeout(fetchText,delay);
 	}
@@ -46,16 +50,15 @@
 		"Phasellus pretium, nibh commodo placerat mollis, justo velit ultricies nunc, posuere pharetra tortor quam non orci. Quisque aliquet pulvinar enim, eget luctus ligula elementum nec. Nullam sollicitudin ligula sit amet ligula euismod et commodo mauris lacinia. Aliquam dolor elit, dignissim ac tempus a, egestas vel mauris. In pellentesque adipiscing sapien, in accumsan dui varius bibendum. Donec tincidunt, magna in aliquam lobortis, ante erat placerat lorem, vitae sollicitudin lorem magna vitae purus. Curabitur porta nibh id erat aliquet vitae placerat massa rutrum. Aliquam ullamcorper lacinia nibh, vitae lobortis nibh euismod eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris volutpat, nulla nec semper faucibus, arcu turpis pretium sapien, et hendrerit mauris nisl ut purus. Integer eget risus eget mi elementum egestas."
 	];
 
+	var text;
 	var $body = $(document.body);
-	var $elems = [];
 	var $elem;
 	var $spinner = $("#spinner");
 	var $h1 = $("h1").eq(0);
-	var spinner_count = 0;
 	var texts_count = 0;
+	var $parent = $h1.parent();
+	var $children;
 
-
-	updateSpinner();
 
 	fetchText();
 

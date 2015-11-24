@@ -1,9 +1,40 @@
+
+@-webkit-keyframes bounce {
+  from {
+  	top:5px;
+  }
+ 
+  to {
+  	top:40px;
+  }
+}
+
+@-moz-keyframes bounce {
+  from {
+  	top:5px;
+  }
+ 
+  to {
+  	top:40px;
+  }
+}
+
 #spinner {
-	position: fixed;
+	position: absolute;
 	background-color: #ddd;
-	border: 1px solid #000;
 	padding: 6px;
 	font-size: 25px;
 	right: 5px;
 	top: 5px;
+
+	-moz-animation-duration: 300ms;
+	-webkit-animation-duration: 300ms;
+	-moz-animation-name: bounce;
+	-webkit-animation-name: bounce;
+	-moz-animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: ease-in;
 }
+

@@ -52,14 +52,11 @@
 	}
 
 	function updateFib() {
-		requestAnimationFrame(function(){
-			// Question: can you put in a call to `fibWorker` here to prevent animation jank?
+		fibWorker.postMessage(fib_n);
+	}
 
-			var res = calcFib(fib_n);
-			$current.text("Fib(" + fib_n + "): " + res);
-			fib_n = (fib_n + 1) % MAX_FIB;
-			setTimeout(updateFib,300);
-		});
+	function updateText() {
+		$current.text("Fib(" + fib_n + "): " + text);
 	}
 
 	var $mover = $("#mover");
@@ -67,8 +64,17 @@
 	var transitionend = false;
 	var fib_n = 0;
 	var MAX_FIB = 40;
+	var text;
 
-	//var fibWorker = new Worker("fib.js");
+	var fibWorker = new Worker("ex6.fib.js");
+
+	fibWorker.onmessage = function(evt) {
+		text = evt.data;
+		requestAnimationFrame(updateText);
+
+		fib_n = (fib_n + 1) % MAX_FIB;
+		setTimeout(updateFib,300);
+	};
 
 	// keep toggling the transition back and forth
 	$mover.bind("transitionend webkitTransitionEnd oTransitionEnd",function(evt){

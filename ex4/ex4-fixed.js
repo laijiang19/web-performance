@@ -48,11 +48,8 @@ function makeObject(fromObj,init) {
 
 	// General class
 	var General = makeObject();
-	General.init = function(){
-		// default iterator
+	General.makeIteratable = function() {
 		this.__iter__ = new Iterator();
-		// default delimiter for string serialization
-		this.__toString_delimiter__ = " ";
 	};
 	General.toString = function() {
 		var keys = Object.keys(this), ret = "";
@@ -69,30 +66,31 @@ function makeObject(fromObj,init) {
 
 
 	// Person class
-	var Person = makeObject(General);
+	var Person = makeObject();
 	Person.init = function(firstName,lastName) {
-		General.init.call(this);
 		this.first_name = firstName || "";
 		this.last_name = lastName || "";
+		this.__toString_delimiter__ = " ";
 	};
+	Person.toString = General.toString; // just borrow it
 
 
 	// Address class
-	var Address = makeObject(General);
+	var Address = makeObject();
 	Address.init = function(street,city,state,zip) {
-		General.init.call(this);
 		this.street = street || "";
 		this.city = city || "";
 		this.state = state || "";
 		this.zip = zip || "";
 		this.__toString_delimiter__ = ", ";
 	};
+	Address.toString = General.toString; // just borrow it
 
 
 	// AddressList class
-	var AddressList = makeObject(General);
+	var AddressList = makeObject();
 	AddressList.init = function() {
-		General.init.call(this);
+		General.makeIteratable.call(this);
 		this.addresses = [];
 		this.entry_count = 0;
 	};
@@ -119,24 +117,26 @@ function makeObject(fromObj,init) {
 		});
 		this.entry_count++;
 	};
+	AddressList.getAddresses = function() {
+		return this.addresses.slice();
+	};
+	AddressList.addAddresses = function(addrList) {
+		this.addresses = this.addresses.concat(addrList);
+	};
 	AddressList.toString = function() {
-		var ret = "", addr;
+		var ret = "", i;
 		if (this.entry_count > 0) {
-			this.resetIterator();
-			addr = this.current();
-			do {
-				ret += (ret !== "" ? "\n" : "") + addr.label + ": " + addr.addr;
+			for (i=0; i<this.addresses.length; i++) {
+				ret += (ret !== "" ? "\n" : "") + this.addresses[i].label + ": " + this.addresses[i].addr;
 			}
-			while ((addr = this.next()));
 		}
 		return ret;
 	};
 
 
 	// AddressBookEntry class
-	var AddressBookEntry = makeObject(General);
+	var AddressBookEntry = makeObject();
 	AddressBookEntry.init = function(name) {
-		General.init.call(this);
 		this.name = name || makeObject(Person,function(){
 			this.init();
 		});
@@ -146,6 +146,9 @@ function makeObject(fromObj,init) {
 	};
 	AddressBookEntry.addAddress = function(label,addr) {
 		this.addresses.addAddress(label,addr);
+	};
+	AddressBookEntry.addAddresses = function(addrs) {
+		this.addresses.addAddresses(addrs);
 	};
 	AddressBookEntry.toString = function() {
 		var ret = "", addr;
@@ -158,20 +161,16 @@ function makeObject(fromObj,init) {
 
 
 	// AddressBook class
-	var AddressBook = makeObject(General);
+	var AddressBook = makeObject();
 	AddressBook.init = function(aBook) {
-		General.init.call(this);
+		General.makeIteratable.call(this);
 		this.entries = [];
 		this.entry_count = 0;
 
 		// did we pass in an AddressBook instance to copy?
 		if (aBook && Object.isPrototypeOf.call(AddressBook,aBook)) {
-			aBook.resetIterator();
-			var entry = aBook.current();
-			do {
-				this.addEntry(entry);
-			}
-			while ((entry = aBook.next()));
+			this.entries = this.entries.concat(aBook.getEntries());
+			this.entry_count = this.entries.length;
 		}
 	};
 	AddressBook.resetIterator = function() {
@@ -194,15 +193,18 @@ function makeObject(fromObj,init) {
 		this.entries.push(entry);
 		this.entry_count++;
 	};
+	AddressBook.getEntries = function() {
+		return this.entries.slice();
+	};
+	AddressBook.addEntries = function(entries) {
+		this.entries = this.entries.concat(entries);
+	};
 	AddressBook.toString = function() {
-		var ret = "", entry;
+		var ret = "", i;
 		if (this.entry_count > 0) {
-			this.resetIterator();
-			entry = this.current();
-			do {
-				ret += (ret !== "" ? "\n---------------\n" : "") + entry;
+			for (i=0; i<this.entries.length; i++) {
+				ret += (ret !== "" ? "\n---------------\n" : "") + this.entries[i];
 			}
-			while ((entry = this.next()));
 		}
 		return ret;
 	};
@@ -239,8 +241,10 @@ function makeObject(fromObj,init) {
 	entry = makeObject(AddressBookEntry,function(){
 		this.init(scott);
 	});
-	entry.addAddress("home",home);
-	entry.addAddress("work",work);
+	entry.addAddresses([
+		{ home: home },
+		{ work: work }
+	]);
 	mybook.addEntry(entry);
 
 	var yourbook = makeObject(AddressBook,function(){
@@ -263,27 +267,24 @@ function makeObject(fromObj,init) {
 	var $mybook = $("<ul></ul>");
 	var $yourbook = $("<ul></ul>");
 	var $li;
+	var entries, i;
 
 	$(document.body).append($("<h2>My Address Book</h2>"));
-	mybook.resetIterator();
-	entry = mybook.current();
-	do {
-		$li = $("<li></li>").html(nl2br(""+entry));
+	entries = mybook.getEntries();
+	for (i=0; i<entries.length; i++) {
+		$li = $("<li></li>").html(nl2br(""+entries[i]));
 		$mybook.append($li);
 	}
-	while ((entry = mybook.next()));
 	$(document.body).append($mybook);
 
 	// *****
 
 	$(document.body).append($("<h2>Your Address Book</h2>"));
-	yourbook.resetIterator();
-	entry = yourbook.current();
-	do {
+	entries = yourbook.getEntries();
+	for (i=0; i<entries.length; i++) {
 		$li = $("<li></li>").html(nl2br(""+entry));
 		$yourbook.append($li);
 	}
-	while ((entry = yourbook.next()));
 	$(document.body).append($yourbook);
 
 })();
